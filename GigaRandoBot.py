@@ -4,7 +4,7 @@ from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, ContextTypes
 import locale
 
-# Setup logging
+
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     level=logging.INFO
@@ -12,9 +12,9 @@ logging.basicConfig(
 
 locale.setlocale(locale.LC_ALL, '')
 
-BOT_TOKEN = "8148356971:AAHVJWE8RgrP-29a6DgWScnGdzAcptpi_5s"  # Use your API Key here
+BOT_TOKEN = "8148356971:AAHVJWE8RgrP-29a6DgWScnGdzAcptpi_5s"  
 
-# Start command
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     welcome_text = (
         "👋 *Welcome to GigaRando!*\n\n"
@@ -25,7 +25,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     await update.message.reply_text(welcome_text, parse_mode="Markdown")
 
-# Spin command for custom or quick spin
+
 async def spin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.args:
         try:
@@ -52,7 +52,7 @@ async def spin(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text("🎯 Choose a range to spin:", reply_markup=reply_markup)
 
-# Inline button callback handler
+
 async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -63,7 +63,6 @@ async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except:
         await query.message.reply_text("⚠️ Invalid range.")
 
-# Generate and send random number
 async def send_random(target, min_val: int, max_val: int):
     result = random.randint(min_val, max_val)
     formatted_result = locale.format_string("%d", result, grouping=True)
