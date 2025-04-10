@@ -1,1 +1,1 @@
-web:: GigaRandoBot:app
+web:: gunicorn GigaRandoBot:app
