@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: gigarandobot
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python GigaRandoBot.py
+    envVars:
+      - key: PORT
+        value: "5000"
