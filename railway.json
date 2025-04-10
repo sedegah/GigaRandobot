@@ -1,6 +1,6 @@
 {
-  "build": [
-    "pip install -r requirements.txt"
-  ],
+  "build": {
+    "command": "pip install -r requirements.txt"
+  },
   "start": "python GigaRandoBot.py"
 }
