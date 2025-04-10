@@ -11,7 +11,7 @@ logging.basicConfig(
 
 locale.setlocale(locale.LC_ALL, '')
 
-BOT_TOKEN = "8148356971:AAHVJWE8RgrP-29a6DgWScnGdzAcptpi_5s" 
+BOT_TOKEN = "8148356971:AAHVJWE8RgrP-29a6DgWScnGdzAcptpi_5s"  # Your provided bot token
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -81,9 +81,11 @@ async def send_random(target, min_val: int, max_val: int):
 if __name__ == '__main__':
     app = Application.builder().token(BOT_TOKEN).build()
 
+    # Add command handlers
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CommandHandler("spin", spin))
     app.add_handler(CallbackQueryHandler(handle_button))
 
+    # Run the bot with polling (this is where polling is enabled)
     print("⚡ Bot started!")
     app.run_polling()
