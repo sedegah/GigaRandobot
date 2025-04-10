@@ -3,6 +3,7 @@ import random
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
 import locale
+import os
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -11,7 +12,9 @@ logging.basicConfig(
 
 locale.setlocale(locale.LC_ALL, '')
 
-BOT_TOKEN = "8148356971:AAGX-iBFu-yxUjq_yzNnn2QGrBT1Lcz6yy4"  # Your provided bot token
+BOT_TOKEN = "8148356971:AAGX-iBFu-yxUjq_yzNnn2QGrBT1Lcz6yy4"  
+
+WEBHOOK_URL = "https://gigarandobot.onrender.com"  
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -23,7 +26,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "`/spin X-Y` — Custom range (e.g., `/spin 10-500`)"
     )
     await update.message.reply_text(welcome_text, parse_mode="Markdown")
-
 
 async def spin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.args:
@@ -51,7 +53,6 @@ async def spin(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup = InlineKeyboardMarkup(keyboard)
         await update.message.reply_text("🎯 Choose a range to spin:", reply_markup=reply_markup)
 
-
 async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -61,7 +62,6 @@ async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await send_random(query.message, min_val, max_val)
     except:
         await query.message.reply_text("⚠️ Invalid range.")
-
 
 async def send_random(target, min_val: int, max_val: int):
     result = random.randint(min_val, max_val)
@@ -78,6 +78,7 @@ async def send_random(target, min_val: int, max_val: int):
     await target.reply_text(msg, parse_mode="Markdown")
 
 
+# Main function to set up webhook
 if __name__ == '__main__':
     app = Application.builder().token(BOT_TOKEN).build()
 
@@ -86,6 +87,9 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler("spin", spin))
     app.add_handler(CallbackQueryHandler(handle_button))
 
-    # Run the bot with polling (this is where polling is enabled)
-    print("⚡ Bot started!")
-    app.run_polling()
+    # Set webhook
+    app.bot.set_webhook(WEBHOOK_URL)  # Tell Telegram to send updates to your webhook URL
+
+    # Run the bot with webhooks (Render will listen on the defined port)
+    print("⚡ Bot started with webhook!")
+    app.run_webhook(port=8080, url_path='/')  # Make sure this matches the webhook path
