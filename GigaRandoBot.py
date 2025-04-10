@@ -1,31 +1,17 @@
 import logging
 import random
-import locale
-import os
-
-from flask import Flask, request
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
-from telegram.ext import (
-    ApplicationBuilder,
-    CommandHandler,
-    CallbackQueryHandler,
-    ContextTypes,
-    Dispatcher,
+from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+import locale
+
+logging.basicConfig(
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    level=logging.INFO
 )
-
-# Logging
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
-
 
 locale.setlocale(locale.LC_ALL, '')
 
-
-BOT_TOKEN = "8148356971:AAHVJWE8RgrP-29a6DgWScnGdzAcptpi_5s"
-
-
-app = Flask(__name__)
-application = ApplicationBuilder().token(BOT_TOKEN).build()
-
+BOT_TOKEN = "YOUR_BOT_TOKEN"  # Replace with your actual bot token
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -37,7 +23,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "`/spin X-Y` — Custom range (e.g., `/spin 10-500`)"
     )
     await update.message.reply_text(welcome_text, parse_mode="Markdown")
-
 
 
 async def spin(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -78,7 +63,6 @@ async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.message.reply_text("⚠️ Invalid range.")
 
 
-
 async def send_random(target, min_val: int, max_val: int):
     result = random.randint(min_val, max_val)
     formatted_result = locale.format_string("%d", result, grouping=True)
@@ -94,34 +78,12 @@ async def send_random(target, min_val: int, max_val: int):
     await target.reply_text(msg, parse_mode="Markdown")
 
 
-# Register handlers
-application.add_handler(CommandHandler("start", start))
-application.add_handler(CommandHandler("spin", spin))
-application.add_handler(CallbackQueryHandler(handle_button))
-
-
-
-@app.route('/webhook', methods=['POST'])
-async def webhook():
-    update = Update.de_json(request.get_json(force=True), application.bot)
-    await application.process_update(update)
-    return "ok"
-
-
-
-@app.route('/')
-def home():
-    return "✅ GigaRandoBot is running!"
-
-
-
 if __name__ == '__main__':
-    import asyncio
+    app = Application.builder().token(BOT_TOKEN).build()
 
-    async def run():
-        await application.initialize()
-        await application.start()
-        port = int(os.environ.get("PORT", 10000))
-        app.run(host='0.0.0.0', port=port)
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("spin", spin))
+    app.add_handler(CallbackQueryHandler(handle_button))
 
-    asyncio.run(run())
+    print("⚡ Bot started!")
+    app.run_polling()
