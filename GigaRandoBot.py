@@ -9,9 +9,9 @@ logging.basicConfig(
     level=logging.INFO
 )
 
-locale.setlocale(locale.LC_ALL, '')
+locale.setlocale(locale.LC_ALL, '')  # Ensure this works based on your location.
 
-BOT_TOKEN = "YOUR_BOT_TOKEN"  # Replace with your actual bot token
+BOT_TOKEN = "8148356971:AAHVJWE8RgrP-29a6DgWScnGdzAcptpi_5s"  # Your bot token here
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -29,13 +29,15 @@ async def spin(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if context.args:
         try:
             min_val, max_val = map(int, context.args[0].split('-'))
+            
+            # Validate the range
             if min_val < 1 or max_val > 1_000_000_000:
-                await update.message.reply_text("⚠️ Range must be between 1 and 1,000,000,000")
+                await update.message.reply_text("⚠️ Range must be between 1 and 1,000,000,000.")
             elif min_val >= max_val:
-                await update.message.reply_text("❌ Max must be greater than Min")
+                await update.message.reply_text("❌ Max must be greater than Min.")
             else:
                 await send_random(update, min_val, max_val)
-        except:
+        except ValueError:
             await update.message.reply_text("🤔 Usage: `/spin 1-100`", parse_mode="Markdown")
     else:
         keyboard = [
@@ -59,8 +61,8 @@ async def handle_button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         min_val, max_val = map(int, query.data.split('-'))
         await send_random(query.message, min_val, max_val)
-    except:
-        await query.message.reply_text("⚠️ Invalid range.")
+    except ValueError:
+        await query.message.reply_text("⚠️ Invalid range selected.")
 
 
 async def send_random(target, min_val: int, max_val: int):
