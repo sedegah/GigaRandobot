@@ -11,7 +11,7 @@ logging.basicConfig(
 
 locale.setlocale(locale.LC_ALL, '')
 
-BOT_TOKEN = "8148356971:AAHVJWE8RgrP-29a6DgWScnGdzAcptpi_5s"  # Your provided bot token
+BOT_TOKEN = "8148356971:AAGX-iBFu-yxUjq_yzNnn2QGrBT1Lcz6yy4"  # Your provided bot token
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
