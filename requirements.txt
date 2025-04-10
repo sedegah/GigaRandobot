@@ -1,3 +1,2 @@
-Flask
-python-telegram-bot==20.7
-gunicorn
+python-telegram-bot==20.0
+flask
