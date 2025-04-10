@@ -7,8 +7,8 @@ from telegram.ext import Updater
 app = Flask(__name__)
 
 # Telegram bot token and webhook URL
-TELEGRAM_BOT_TOKEN = "your-bot-token"  # Replace with your Telegram bot token
-WEBHOOK_URL = "https://gigarandobot.railway.app/webhook"  # Replace with your Railway app's HTTPS URL
+TELEGRAM_BOT_TOKEN = "8148356971:AAGX-iBFu-yxUjq_yzNnn2QGrBT1Lcz6yy4"  # Replace with your Telegram bot token
+WEBHOOK_URL = "https://GigaRandoBot.railway.app/webhook"  # Replace with your Railway app's HTTPS URL
 
 # Initialize the Telegram Bot
 bot = Bot(token=TELEGRAM_BOT_TOKEN)
