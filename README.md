@@ -13,9 +13,9 @@ GigaRandoBot is an intelligent, high-speed random content generator designed to 
 ⚙️ Built with scalability and modularity in mind
 
 🛠️ Tech Stack
-Language: JavaScript / Python (adapt based on your implementation)
+Language: JavaScript / Python 
 
-Framework: Node.js / Flask / (or specify)
+Framework: Node.js / Flask / 
 
 Hosting: Vercel / Heroku / AWS
 
