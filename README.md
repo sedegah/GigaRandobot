@@ -1,95 +1,75 @@
-🤖 GigaRandoBot
-GigaRandoBot is an intelligent, high-speed random content generator designed to spark creativity, test applications, or entertain users with limitless randomized possibilities. Built with flexibility and ease of use in mind, GigaRandoBot can be easily integrated into any workflow, project, or chatbot system.
+## GigaRandoBot
 
-🚀 Features
-🔥 Ultra-fast random text, number, and emoji generation
+**GigaRandoBot** is a Telegram bot that generates random numbers between 1 and 1,000,000,000 on demand. Built using **FastAPI** and **python-telegram-bot**, it offers a smooth, interactive experience via webhook updates.
 
-🎯 Customizable prompts for specific use cases
+---
 
-🤝 Easy integration with Telegram, Discord, web apps, and more
+### Overview
 
-📦 Lightweight and optimized for performance
+The bot responds to the `/start` command with an inline button that, when clicked, triggers the generation and delivery of a random number. Webhook delivery is handled through an async FastAPI server with rate-limiting support enabled.
 
-⚙️ Built with scalability and modularity in mind
+---
 
-🛠️ Tech Stack
-Language: JavaScript / Python 
+### Tech Stack
 
-Framework: Node.js / Flask / 
+* **Python 3.11**
+* **FastAPI** — webhook server
+* **python-telegram-bot 20.7** — Telegram bot framework (async)
+* **AIORateLimiter** — optional per-user request throttling
+* **Uvicorn** — ASGI server for FastAPI
 
-Hosting: Vercel / Heroku / AWS
+---
 
-Integrations: Telegram Bot API / Discord API / Webhooks
+### Functional Handlers
 
-📸 Demo
+* `/start`: Sends a welcome message with a button
+* `callback_query:generate_number`: Replies with a random integer
 
-Coming Soon: Live interactive demo!
+---
 
-📄 Installation
-bash
-Copy
-Edit
-# Clone the repository
-git clone https://github.com/yourusername/gigarandobot.git
+### Code Structure
 
-# Navigate into the project directory
-cd gigarandobot
+```
+.
+├── api/
+│   └── webhook.py        
+├── requirements.txt     
+├── runtime.txt          
+├── README.md            
+```
 
-# Install dependencies
-npm install   # or pip install -r requirements.txt for Python projects
+---
 
-# Run the bot
-npm start     # or python app.py
-⚙️ Configuration
-Create a .env file in the root directory with your credentials:
+### Environment Configuration
 
-env
-Copy
-Edit
-API_KEY=your-api-key
-BOT_TOKEN=your-bot-token
-OTHER_CONFIG=your-values
-🧩 Usage
-Telegram: Add the bot to your chat and use commands like /random, /number, /quote.
+This project relies on the following environment variables:
 
-Discord: Interact using !random, !roll, !idea.
+* `BOT_TOKEN`: Telegram Bot API token
+* `WEBHOOK_URL`: Full HTTPS webhook URL for Telegram to send updates
+* `PORT`: Optional (default is 10000)
 
-Web App: Send a POST request to /generate with your desired parameters.
+These variables are used for both webhook registration and runtime execution.
 
-🛠️ Roadmap
- Basic random generation (text, numbers, emojis)
+---
 
- Telegram bot integration
+### Deployment Notes
 
- Discord bot integration
+* The webhook is automatically registered on startup using the provided `WEBHOOK_URL`.
+* The app runs on `uvicorn` and listens on the port defined by the environment.
+* Inline command and callback interactions are processed via `telegram.ext.Application`.
 
- Deploy web-based UI for customization
+---
 
- Add AI-generated random story mode
+### Command Overview
 
- Create public API
+| Command    | Triggered Action                               |
+| ---------- | ---------------------------------------------- |
+| `/start`   | Sends welcome text with a generate button      |
+| `callback` | Returns a random number when button is clicked |
 
-🤝 Contributing
-Contributions are welcome! 🚀
-Feel free to fork the repo and submit a pull request. Make sure to:
+---
 
-Write clear commit messages
+### License
 
-Document new features properly
-
-Follow the existing code style
-
-📃 License
 This project is licensed under the MIT License.
 
-✨ Acknowledgements
-OpenAI for initial inspiration
-
-Telegram Bot API Team
-
-All open-source contributors
-
-📬 Contact
-Creator: Kimathi Elikplim Sedegah
-
-Portfolio: kimathisedegah.vercel.app
