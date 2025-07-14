@@ -90,6 +90,11 @@ async def telegram_webhook(req: Request):
 
     return {"status": "ok"}
 
+@app.get("/")
+async def root():
+    return {"status": "GigaRandoBot is alive!"}
+
+
 @app.on_event("startup")
 async def on_startup():
     try:
