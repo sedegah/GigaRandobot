@@ -1,9 +1,12 @@
 services:
-  - type: worker
+  - type: web
     name: gigarandobot
     env: python
+    plan: free
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "python main.py"
+    startCommand: "uvicorn api.webhook:app --host 0.0.0.0 --port ${PORT:-10000}"
     envVars:
-      - key: TELEGRAM_TOKEN
+      - key: BOT_TOKEN
+        sync: false
+      - key: WEBHOOK_URL
         sync: false
